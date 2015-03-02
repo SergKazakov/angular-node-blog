@@ -1,10 +1,13 @@
+'use strict';
+
 var gulp          = require('gulp'),
     sass          = require('gulp-sass'),
     autoprefixer  = require('gulp-autoprefixer'),
     livereload    = require('gulp-livereload'),
     sourcemaps    = require('gulp-sourcemaps'),
     plumber       = require('gulp-plumber'),
-    jshint        = require('gulp-jshint');
+    jshint        = require('gulp-jshint'),
+    stylish       = require('jshint-stylish');
 
 gulp.task('sass', function () {
   gulp.src('client/scss/main.scss')
@@ -21,14 +24,14 @@ gulp.task('sass', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('client/js/**/*.js')
+  return gulp.src(['./**/*.js', '!./node_modules/**', '!./client/bower_components/**'])
     .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter(stylish))
     .pipe(livereload());
 });
 
 gulp.task('default', ['sass', 'scripts'], function(){
   livereload.listen();
   gulp.watch('client/scss/**/*.scss', ['sass']);
-  gulp.watch('client/js/**/*.js', ['scripts']);
+  gulp.watch('./**/*.js', ['scripts']);
 });

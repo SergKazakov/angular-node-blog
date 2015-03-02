@@ -5,7 +5,7 @@ angular.module('billboard')
     $stateProvider
       .state('signup', {
         url: '/signup',
-        templateUrl: 'app/controller/signup/signup.html',
+        templateUrl: 'partials/signup',
         data: {
           public: true
         }

@@ -1,30 +1,20 @@
-<section data-ng-if="!home.arePostsEmpty" class="posts">
-  <input type="text" class="form__input form__input_search" placeholder="Search in {{home.posts.length}} posts..." ng-model="search">
-  <div class="post" data-ng-repeat="post in home.posts | filter : search">
-    <div class="post-date">
-      <span class="post-date__inner">{{post.DateCreation | date : 'd MMM'}}</span>
-    </div>
-    <ul class="post-info">
-      <li class="post-info__item">posted by
-        <a ui-sref="user({userId: post.UserId})" class="post-info__item-link">{{post.UserName}}</a>
-      </li>
-    </ul>
-    <div class="post-container">
-      <h2 class="post-header">{{post.Title}}</h2>
-      <p class="post-body">{{post.Text | limitTo:200}}</p>
-      <ul class="post-actions">
-        <li class="post-actions__item">
-          <a ui-sref="post({postId: post._id.$id})" class="post-actions__link">Read More</a>
-        </li>
-        <li data-ng-if="post.UserId == user.user_id" class="post-actions__item">
-          <a ui-sref="editpost({postId: post._id.$id})" class="post-actions__link">Edit</a>
-        </li>
-        <li data-ng-if="post.UserId == user.user_id" class="post-actions__item">
-          <a data-ng-click="home.deletePost(post._id.$id, $index)" href="javascript:void(0)" class="post-actions__link">Delete</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<h1 class="post-empty" data-ng-if="home.arePostsEmpty">Oops! You have no posts:(</h1>
+section.posts(data-ng-if='!home.arePostsEmpty')
+  input.form__input.form__input_search(type='text', placeholder='Search in {{home.posts.length}} posts...', ng-model='search')
+  .post(data-ng-repeat='post in home.posts | filter : search')
+    .post-date
+      span.post-date__inner {{post.DateCreation | date : 'd MMM'}}
+    ul.post-info
+      li.post-info__item
+        | posted by&nbsp;
+        a.post-info__item-link(ui-sref='user({userId: post.UserId})') {{post.UserName}}
+    .post-container
+      h2.post-header {{post.Title}}
+      p.post-body {{post.Text | limitTo:200}}
+      ul.post-actions
+        li.post-actions__item
+          a.post-actions__link(ui-sref='post({postId: post._id})') Read More
+        li.post-actions__item(data-ng-if='post.UserId == user.user_id')
+          a.post-actions__link(ui-sref='editpost({postId: post._id})') Edit
+        li.post-actions__item(data-ng-if='post.UserId == user.user_id')
+          a.post-actions__link(data-ng-click='home.deletePost(post._id, $index)', href='javascript:void(0)') Delete
+h1.post-empty(data-ng-if='home.arePostsEmpty') Oops! You have no posts:(

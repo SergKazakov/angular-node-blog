@@ -5,7 +5,7 @@ angular.module('billboard')
     $stateProvider
       .state('editpost', {
         url: '/editpost/:postId',
-        templateUrl:  'app/controller/editPost/editPost.html',
+        templateUrl:  'partials/editPost',
         controller:   'EditPostCtrl as editpost'
       });
   });

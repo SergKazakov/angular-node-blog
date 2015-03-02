@@ -5,7 +5,7 @@ angular.module('billboard')
     $stateProvider
       .state('friends', {
         url: '/friends',
-        templateUrl: 'app/controller/friends/friends.html',
+        templateUrl: 'partials/friends',
         controller: 'FriendsCtrl as friends',
         resolve: {}
       });

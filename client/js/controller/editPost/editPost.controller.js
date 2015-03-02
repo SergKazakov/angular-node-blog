@@ -10,10 +10,7 @@ angular.module('billboard')
     }.bind(this));
 
     this.editPost = function(postId){
-      api.editPost({
-        postId: postId,
-        post:   this.post
-      }).success(function(data){
+      api.editPost(this.post).success(function(data){
         $state.go('home');
       });
     };

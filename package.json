@@ -2,24 +2,29 @@
   "name": "billboard",
   "version": "0.0.1",
   "dependencies": {
-    "body-parser":        "latest",
-    "error-handler":      "latest",
-    "express":            "latest",
-    "jade":               "latest",
-    "method-override":    "latest",
-    "morgan":             "latest"
+    "body-parser": "latest",
+    "chalk": "^1.0.0",
+    "error-handler": "latest",
+    "express": "latest",
+    "jade": "latest",
+    "method-override": "latest",
+    "mongoose": "^3.8.24",
+    "morgan": "latest"
   },
   "devDependencies": {
-    "bower":              "latest",
-    "gulp":               "latest",
-    "gulp-autoprefixer":  "latest",
-    "gulp-jshint":        "latest",
-    "gulp-livereload":    "latest",
-    "gulp-plumber":       "latest",
-    "gulp-sass":          "latest",
-    "gulp-sourcemaps":    "latest"
+    "bower": "latest",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-jshint": "latest",
+    "gulp-livereload": "latest",
+    "gulp-plumber": "latest",
+    "gulp-sass": "latest",
+    "gulp-sourcemaps": "latest",
+    "install": "^0.1.8",
+    "jshint-stylish": "^1.0.1",
+    "npm": "^2.6.1"
   },
   "engines": {
-    "node":               "latest"
+    "node": "latest"
   }
 }

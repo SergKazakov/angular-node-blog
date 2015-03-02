@@ -1,15 +1,15 @@
-var 
+'use strict';
+
+var
   express           = require('express'),
   bodyParser        = require('body-parser'),
   methodOverride    = require('method-override'),
-  errorHandler      = require('error-handler'),
   morgan            = require('morgan'),
-  routes            = require('./server/routes/routes'),
-  http              = require('http'),
   path              = require('path'),
-  env               = process.env.NODE_ENV || 'development',
+  mongoose          = require('mongoose'),
+  chalk             = require('chalk'),
+  routes            = require('./server/routes/routes'),
   app               = module.exports = express();
-
 
 app
   .set('views', path.join(__dirname, '/client/views'))
@@ -18,7 +18,24 @@ app
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: false }))
   .use(methodOverride())
-  .use(express.static(path.join(__dirname, 'client')))
+  .use(express.static(path.join(__dirname, 'client')));
+
+mongoose.connect('mongodb://root:root@ds033601.mongolab.com:33601/blog', function(err) {
+  if (err) {
+    console.error(chalk.red('Could not connect to MongoDB!'));
+    console.log(chalk.red(err));
+  }
+});
+
+mongoose.connection.on('error', function(err) {
+  console.error(chalk.red('MongoDB connection error: ' + err));
+  process.exit(-1);
+  }
+);
+
+require('./server/routes/api')(app);
+
+app
   .get('/', routes.index)
   .get('/partials/:name', routes.partials)
   .get('*', routes.index)

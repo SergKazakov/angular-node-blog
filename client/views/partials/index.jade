@@ -18,11 +18,11 @@ block content
         a.logo(ui-sref="home")
           img.logo__img(src="img/logo.jpg")
       h2.greeting(ng-if="user.authenticated")
-        | Hello,
+        | Hello,&nbsp;
         a.greeting__link(ng-bind="user.first_name", ui-sref="user({userId: user.user_id})")
       ui-view
     footer.footer
       p.copyright
-        | Copyrights (c) 
-        a.copyright-link(ui-sref="home") Billboard 
+        | Copyrights (c)&nbsp;
+        a.copyright-link(ui-sref="home") Billboard&nbsp;
         | 2015

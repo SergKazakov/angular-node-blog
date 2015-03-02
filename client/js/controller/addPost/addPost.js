@@ -5,7 +5,7 @@ angular.module('billboard')
     $stateProvider
       .state('addpost', {
         url: '/addpost',
-        templateUrl: 'app/controller/addPost/addPost.html',
+        templateUrl: 'partials/addPost',
         controller: 'AddPostCtrl as addpost'
       });
   });

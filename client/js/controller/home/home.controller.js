@@ -7,7 +7,7 @@ angular.module('billboard')
     this.arePostsEmpty = false;
 
     api.getPosts(user.current.user_id).success(function(data){
-      if (data.length) {
+      if (data && data.length) {
         this.posts = data;
         this.arePostsEmpty = false;
       }

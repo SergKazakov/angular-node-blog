@@ -5,7 +5,7 @@ angular.module('billboard')
     $stateProvider
       .state('user', {
         url: '/user/:userId',
-        templateUrl: 'app/controller/user/user.html',
+        templateUrl: 'partials/user',
         controller: 'UserCtrl as user'
       });
   });
