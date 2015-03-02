@@ -1,0 +1,10 @@
+<form ng-submit="editpost.editPost(editpost.post._id.$id)" name="editPostForm">
+    <div class="form__title">Edit post</div>
+    <div class="form__row">
+        <input class="form__input" placeholder="Title" name="Title" ng-model="editpost.post.Title" required/>
+    </div>
+    <div class="form__row">
+        <textarea class="form__textarea" placeholder="Text" name="Text" ng-model="editpost.post.Text" required></textarea>
+    </div>
+    <button type="submit" ng-disabled="editPostForm.$invalid" class="btn">Save</button>
+</form>

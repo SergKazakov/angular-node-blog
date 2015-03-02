@@ -1,0 +1,14 @@
+<div class="post">
+  <div class="post-date">
+    <span class="post-date__inner">{{post.post.DateCreation | date : 'd MMM'}}</span>
+  </div>
+  <ul class="post-info">
+    <li class="post-info__item">posted by
+      <a ui-sref="user({userId: post.post.UserId})" class="post-info__item-link">{{post.post.UserName}}</a>
+    </li>
+  </ul>
+  <div class="post-container">
+    <h2 class="post-header">{{post.post.Title}}</h2>
+    <p class="post-body">{{post.post.Text}}</p>
+  </div>
+</div>

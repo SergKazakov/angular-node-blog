@@ -1,0 +1,30 @@
+<section data-ng-if="!home.arePostsEmpty" class="posts">
+  <input type="text" class="form__input form__input_search" placeholder="Search in {{home.posts.length}} posts..." ng-model="search">
+  <div class="post" data-ng-repeat="post in home.posts | filter : search">
+    <div class="post-date">
+      <span class="post-date__inner">{{post.DateCreation | date : 'd MMM'}}</span>
+    </div>
+    <ul class="post-info">
+      <li class="post-info__item">posted by
+        <a ui-sref="user({userId: post.UserId})" class="post-info__item-link">{{post.UserName}}</a>
+      </li>
+    </ul>
+    <div class="post-container">
+      <h2 class="post-header">{{post.Title}}</h2>
+      <p class="post-body">{{post.Text | limitTo:200}}</p>
+      <ul class="post-actions">
+        <li class="post-actions__item">
+          <a ui-sref="post({postId: post._id.$id})" class="post-actions__link">Read More</a>
+        </li>
+        <li data-ng-if="post.UserId == user.user_id" class="post-actions__item">
+          <a ui-sref="editpost({postId: post._id.$id})" class="post-actions__link">Edit</a>
+        </li>
+        <li data-ng-if="post.UserId == user.user_id" class="post-actions__item">
+          <a data-ng-click="home.deletePost(post._id.$id, $index)" href="javascript:void(0)" class="post-actions__link">Delete</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<h1 class="post-empty" data-ng-if="home.arePostsEmpty">Oops! You have no posts:(</h1>

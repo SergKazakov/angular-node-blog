@@ -1,0 +1,23 @@
+<ul class="friends-list">
+  <li class="friends-list__item" data-ng-repeat="friend in friends.users" ng-if="user.user_id !== friend.user_id">
+    <div class="friends-list__name">
+      <a class="friends-list__link" ui-sref="user({userId: friend.user_id})">{{friend.first_name}}</a>
+    </div>
+    <div class="friends-list__actions">
+      <button
+        ng-if="friend.properties.isFriend.value == true"
+        data-ng-click="friends.deleteFriend(friend.user_id, $index)"
+        class="btn btn_danger">
+        Delete
+      </button>
+      <button
+        ng-if="friend.properties.isFriend.value != true"
+        data-ng-click="friends.addFriend(friend.user_id, $index)"
+        class="btn">
+        Add
+      </button>
+    </div>
+  </li>
+</ul>
+
+<h1 class="post-empty" ng-if="friends.areFriendsEmpty">Oops, there are no users any more:(</h1>

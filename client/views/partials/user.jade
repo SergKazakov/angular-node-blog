@@ -1,0 +1,22 @@
+<div class="user-card">
+  <div class="user-card-aside">
+    <img alt="" src="img/profile-gray.png" class="user-card__img">
+  </div>
+  <div class="user-card-content">
+    <h3 class="user-card__name">{{user.user.UserName}}</h3>
+    <ul class="user-card-info">
+      <li class="user-card-info__item">
+        <span class="user-card-info__label">Email:</span>
+        <span class="user-card-info__value">{{user.user.UserEmail}}</span>
+      </li>
+      <li class="user-card-info__item">
+        <span class="user-card-info__label">Count of posts:</span>
+        <span class="user-card-info__value">{{user.user.PostsCount}}</span>
+      </li>
+      <li class="user-card-info__item">
+        <span class="user-card-info__label">Count of friends:</span>
+        <span class="user-card-info__value">{{user.user.FriendsCount}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

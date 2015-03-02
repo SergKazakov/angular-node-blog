@@ -1,0 +1,30 @@
+<form ua-signup class="form form_login">
+    <div class="form__title form__title_center">
+        Sign up
+    </div>
+    <div class="form__row">
+      <img class="form__img"
+          src="img/profile.png" alt="">
+    </div>
+    <div class="form__row">
+        <input name="first_name" placeholder="First name" type="text" class="form__input" />
+    </div>
+    <div class="form__row">
+        <input ua-is-email name="login" placeholder="Email" type="text" class="form__input" />
+    </div>
+    <div class="form__row">
+        <input name="password" placeholder="Password" type="password" class="form__input" />
+    </div>
+    <div class="form__row">
+        <input type="submit" class="btn btn_block" value="Sign Up">
+    </div>
+    <div class="form__footer">
+      <p class="form__error" ng-show="error">{{ error.message }}</p>
+      <div class="form__info">
+        Don't have an account! <a class="form__link" ui-sref="login">Log in</a>
+      </div>
+    </div>
+    <div ng-show="loading" class="loading-bar">
+      <img  class="loading-bar__img" src="img/ajax-loader.gif">
+    </div>
+</form>

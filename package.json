@@ -1,0 +1,25 @@
+{
+  "name": "billboard",
+  "version": "0.0.1",
+  "dependencies": {
+    "body-parser":        "latest",
+    "error-handler":      "latest",
+    "express":            "latest",
+    "jade":               "latest",
+    "method-override":    "latest",
+    "morgan":             "latest"
+  },
+  "devDependencies": {
+    "bower":              "latest",
+    "gulp":               "latest",
+    "gulp-autoprefixer":  "latest",
+    "gulp-jshint":        "latest",
+    "gulp-livereload":    "latest",
+    "gulp-plumber":       "latest",
+    "gulp-sass":          "latest",
+    "gulp-sourcemaps":    "latest"
+  },
+  "engines": {
+    "node":               "latest"
+  }
+}

@@ -1,0 +1,10 @@
+<form ng-submit="addpost.addPost()" name="addPostForm">
+        <div class="form__title">Add new post</div>
+        <div class="form__row">
+            <input class="form__input" placeholder="Title" name="Title" ng-model="addpost.title" required/>
+        </div>
+        <div class="form__row">
+            <textarea class="form__textarea" placeholder="Text" name="Text" ng-model="addpost.text" required></textarea>
+        </div>
+        <button type="submit" ng-disabled="addPostForm.$invalid" class="btn">Add</button>
+</form>
