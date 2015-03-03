@@ -40,7 +40,8 @@ router.route('/user/:userId')
             if (err) throw err;
             cb(null, user);
         });  
-      }], function(err, results){
+      }],
+      function(err, results){
         if (err) throw err;
 
         var
@@ -68,19 +69,30 @@ router.route('/friend/:friendId')
 
 router.route('/users')
   .post(function(req, res){
-    UserApp.User.search({}, function(err, users){
-      if (err) throw err;
-      var result = [];
-      users.items.forEach(function(elem, index){
-        UserApp.User.get({
-            'user_id': elem.user_id
-        }, function(err, user){
-            if (err) throw err;
-            result.push(user[0]);
+    async.waterfall([
+      function(cb){
+        UserApp.User.search({}, function(err, users){
+          if (err) throw err;
+          cb(null, users.items);
         });
+      },
+      function(users, cb){
+        var result = [];
+        users.forEach(function(elem, index){
+          UserApp.User.get({
+              'user_id': elem.user_id
+          }, function(err, user){
+              if (err) throw err;
+              result.push(user[0]);
+          });
+        });
+        cb(null, result);
+      }],
+      function(err, result){
+        if (err) throw err;
+        console.log(result);
+        res.status(200).send(result);
       });
-      res.status(200).send(result);
-    });
   });
 
 router.route('/post')
