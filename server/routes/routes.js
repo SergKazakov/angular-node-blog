@@ -1,9 +1,20 @@
 'use strict';
 
-exports.index = function(req, res){
-  res.render('partials/index');
-};
+var 
+  express = require('express'),
+  router  = express.Router();
 
-exports.partials = function (req, res) {
-  res.render('partials/' + req.params.name);
-};
+router
+  .get('/', function(req, res){
+    res.render('partials/index');
+  })
+  .get('/partials/:name', function (req, res) {
+    res.render('partials/' + req.params.name);
+  })
+  .get('*', function(req, res){
+    res.render('partials/index');
+  });
+
+module.exports = function(app) {
+  app.use('/', router);
+}

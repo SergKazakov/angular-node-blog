@@ -8,7 +8,6 @@ var
   path              = require('path'),
   mongoose          = require('mongoose'),
   chalk             = require('chalk'),
-  routes            = require('./server/routes/routes'),
   app               = module.exports = express();
 
 app
@@ -34,9 +33,6 @@ mongoose.connection.on('error', function(err) {
 );
 
 require('./server/routes/api')(app);
+require('./server/routes/routes')(app);
 
-app
-  .get('/', routes.index)
-  .get('/partials/:name', routes.partials)
-  .get('*', routes.index)
-  .listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000);
