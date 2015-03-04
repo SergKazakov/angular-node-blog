@@ -7,7 +7,9 @@ var
   Post     = require('../models/post'),
   Friend   = require('../models/friend'),
   UserApp  = require('userapp'),
-  async    = require('async');
+  async    = require('async'),
+  Promise  = require('promise');
+
 
 UserApp
   .initialize({
@@ -39,7 +41,7 @@ router.route('/user/:userId')
         UserApp.User.get({}, function(err, user){
             if (err) throw err;
             cb(null, user);
-        });  
+        });
       }],
       function(err, results){
         if (err) throw err;
@@ -69,30 +71,43 @@ router.route('/friend/:friendId')
 
 router.route('/users')
   .post(function(req, res){
-    async.waterfall([
-      function(cb){
+
+    new Promise(function (resolve, reject) {
+
         UserApp.User.search({}, function(err, users){
-          if (err) throw err;
-          cb(null, users.items);
+          if (err) reject(err);
+          resolve(users.items);
         });
-      },
-      function(users, cb){
+
+    }).then(function (users) {
         var result = [];
+
         users.forEach(function(elem, index){
-          UserApp.User.get({
-              'user_id': elem.user_id
-          }, function(err, user){
-              if (err) throw err;
-              result.push(user[0]);
-          });
+
+          result.push(
+
+             new Promise(function (resolve, reject) {
+
+                UserApp.User.get({
+                      'user_id': elem.user_id
+                  }, function(err, user){
+                      if (err) reject(err);
+                      resolve(user[0]);
+                  });
+              })
+
+          );
+
         });
-        cb(null, result);
-      }],
-      function(err, result){
-        if (err) throw err;
-        console.log(result);
-        res.status(200).send(result);
-      });
+
+        Promise.all(result).then(function (result) {
+          res.status(200).send(result);
+        });
+
+    }).catch(function (err) {
+       if (err) throw err;
+    });
+
   });
 
 router.route('/post')

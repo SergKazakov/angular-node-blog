@@ -11,7 +11,8 @@
     "method-override": "latest",
     "mongoose": "^3.8.24",
     "morgan": "latest",
-    "userapp": "^2.0.0"
+    "userapp": "^2.0.0",
+    "promise": "^6.1.0"
   },
   "devDependencies": {
     "bower": "latest",
