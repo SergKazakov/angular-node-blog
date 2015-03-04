@@ -2,18 +2,18 @@
   "name": "billboard",
   "version": "0.0.1",
   "dependencies": {
-    "consolelog": "~2.0.1",
-    "modernizr": "~2.8.1",
-    "normalize.css": "~3.0.1",
     "angular": "~1.2.28",
     "jquery": "~1.11.1",
     "angular-loading-bar": "~0.6.0",
     "bower": "*",
-    "install": "~1.0.4",
-    "userapp-angular": "~2.0.4"
+    "auth0-lock": "~7.1.6",
+    "auth0-angular": "~4.0.1",
+    "angular-cookie": "~4.0.6",
+    "angular-storage": "~0.5.0",
+    "angular-jwt": "~0.0.6",
+    "angular-ui-router": "~0.2.13"
   },
   "devDependencies": {
-    "angular-mocks": ">=1.2.*",
-    "angular-ui-router": "~0.2.13"
+    "angular-mocks": ">=1.2.*"
   }
 }

@@ -5,24 +5,24 @@ block content
   section.page
     .container
       nav.nav
-        ul.nav-left(ng-if="user.authenticated")
+        ul.nav-left
           li.nav__item
-            a.nav__item-link(ui-sref="home", ui-sref-active="nav__item-link_active") Posts
+            a.nav__item-link(ui-sref="auth.home", ui-sref-active="nav__item-link_active") Posts
           li.nav__item
-            a.nav__item-link(ui-sref="addpost", ui-sref-active="nav__item-link_active") Add post
-        ul.nav-right(ng-if="user.authenticated")
+            a.nav__item-link(ui-sref="auth.addpost", ui-sref-active="nav__item-link_active") Add post
+        ul.nav-right
           li.nav__item
-            a.nav__item-link(ui-sref="friends", ui-sref-active="nav__item-link_active") Add friends
+            a.nav__item-link(ui-sref="auth.friends", ui-sref-active="nav__item-link_active") Add friends
           li.nav__item
-            a.nav__item-link(ua-logout, href="#") Log out
-        a.logo(ui-sref="home")
+            a.nav__item-link(ng-click="auth.logout()", href="#") Log out
+        a.logo(ui-sref="auth.home")
           img.logo__img(src="img/logo.jpg")
-      h2.greeting(ng-if="user.authenticated")
+      h2.greeting
         | Hello,&nbsp;
-        a.greeting__link(ng-bind="user.first_name", ui-sref="user({userId: user.user_id})")
+        a.greeting__link(ng-bind="auth.user.name", ui-sref="auth.user({userId: auth.user.user_id})")
       ui-view
     footer.footer
       p.copyright
         | Copyrights (c)&nbsp;
-        a.copyright-link(ui-sref="home") Billboard&nbsp;
+        a.copyright-link(ui-sref="auth.home") Billboard&nbsp;
         | 2015

@@ -5,9 +5,6 @@ angular.module('billboard')
     $stateProvider
       .state('login', {
         url: '/login',
-        templateUrl: 'partials/login',
-        data: {
-          login: true
-        }
+        controller: 'LoginCtrl as login'
       });
   });

@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('billboard')
-  .controller('HomeCtrl', function(user, api) {
+  .controller('HomeCtrl', function(api, auth) {
 
   	this.posts = [];
     this.arePostsEmpty = false;
 
-    api.getPosts(user.current.user_id).success(function(data){
+    api.getPosts(auth.profile.user_id).success(function(data){
       if (data && data.length) {
         this.posts = data;
         this.arePostsEmpty = false;

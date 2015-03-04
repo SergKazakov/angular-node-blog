@@ -3,10 +3,9 @@
 angular.module('billboard')
   .config(function($stateProvider) {
     $stateProvider
-      .state('home', {
+      .state('auth.home', {
         url: '/',
         templateUrl: 'partials/home',
-        controller: 'HomeCtrl as home',
-        resolve: {}
+        controller: 'HomeCtrl as home'
       });
   });
