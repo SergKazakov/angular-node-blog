@@ -11,10 +11,10 @@
     "method-override": "latest",
     "mongoose": "^3.8.24",
     "morgan": "latest",
-    "userapp": "^2.0.0"
+    "userapp": "^2.0.0",
+    "bower": "latest"
   },
   "devDependencies": {
-    "bower": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-jshint": "latest",
@@ -28,5 +28,8 @@
   "engines": {
     "node": "latest",
     "npm": "latest"
+  },
+  "scripts": {
+      "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
