@@ -7,8 +7,7 @@ var
   Post     = require('../models/post'),
   Friend   = require('../models/friend'),
   UserApp  = require('userapp'),
-  async    = require('async'),
-  Promise  = require('promise');
+  async    = require('async');
 
 
 UserApp
@@ -25,7 +24,9 @@ router.route('/user/:userId')
         Post.find({
           UserId: req.params.userId
         }, function(err, posts){
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           cb(null, posts);
         });
       },
@@ -33,23 +34,31 @@ router.route('/user/:userId')
         Friend.findOne({
           UserId: req.params.userId
         }, function(err, user){
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           cb(null, user);
         });
       },
       function(cb){
-        UserApp.User.get({}, function(err, user){
-            if (err) throw err;
-            cb(null, user);
+        UserApp.User.get({
+          'user_id': req.params.userId
+        }, function(err, user){
+            if (err) {
+              throw err;
+            }
+            cb(null, user[0]);
         });
       }],
       function(err, results){
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
 
         var
           postsCount   = results[0] ? results[0].length : 0,
           friendsCount = results[1] ? results[1].Friends.length : 0,
-          profile      = results[2][0];
+          profile      = results[2];
 
         res.status(200).send({
           PostsCount   : postsCount,
@@ -63,50 +72,88 @@ router.route('/user/:userId')
 
 router.route('/friend/:friendId')
   .post(function(req, res){
-
+    Friend.findOneAndUpdate({
+      UserId: req.body.userId
+    },
+    {
+      $addToSet: {
+        Friends: req.params.friendId
+      }
+    },
+    {
+      upsert: true
+    }, function(err, friend){
+      if (err) {
+        throw err;
+      }
+      res.status(200).send(friend);
+    });
   })
   .put(function(req, res){
-
+    Friend.findOneAndUpdate({
+      UserId: req.body.userId
+    },
+    {
+      $pull: {
+        Friends: req.params.friendId
+      }
+    }, function(err, friend){
+      if (err) {
+        throw err;
+      }
+      res.status(200).send(friend);
+    });
   });
 
 router.route('/users')
   .post(function(req, res){
 
-    new Promise(function (resolve, reject) {
-
-        UserApp.User.search({}, function(err, users){
-          if (err) reject(err);
-          resolve(users.items);
+      async.waterfall([
+        function(cb){
+          UserApp.User.search({
+            fields: 'user_id'
+          }, function(err, users){
+            if (err) {
+              throw err;
+            }
+            var ids = [];
+            users.items.forEach(function(elem){
+              ids.push(elem.user_id);
+            });
+            cb(null, ids);
+          });
+        },
+        function(ids, cb){
+          UserApp.User.get({
+            'user_id': ids
+          }, function(err, users){
+            cb(null, users);
+          });
+      },
+      function(users, cb){
+          Friend.findOne({
+            UserId: req.body.userId
+          }, function(err, friend){
+            if (err) {
+              throw err;
+            }
+            if (friend && friend.Friends.length) {
+              users.forEach(function(user){
+                friend.Friends.forEach(function(id){
+                  if (user.user_id === id) {
+                    user.properties.isFriend.value = true;
+                  }
+                });
+              });
+            }
+          cb(null, users);
         });
-
-    }).then(function (users) {
-        var result = [];
-
-        users.forEach(function(elem, index){
-
-          result.push(
-
-             new Promise(function (resolve, reject) {
-
-                UserApp.User.get({
-                      'user_id': elem.user_id
-                  }, function(err, user){
-                      if (err) reject(err);
-                      resolve(user[0]);
-                  });
-              })
-
-          );
-
-        });
-
-        Promise.all(result).then(function (result) {
-          res.status(200).send(result);
-        });
-
-    }).catch(function (err) {
-       if (err) throw err;
-    });
+      }], function(err, result){
+        if (err) {
+          throw err;
+        }
+        res.status(200).send(result);
+      });
 
   });
 
@@ -114,7 +161,9 @@ router.route('/post')
   .post(function(req, res){
     var post = new Post(req.body);
     post.save(function(err, post){
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       res.status(200).send(post);
     });
   });
@@ -122,7 +171,9 @@ router.route('/post')
 router.route('/post/:postId')
   .get(function(req, res){
     Post.findById(mongoose.Types.ObjectId(req.params.postId), function(err, post){
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       res.status(200).send(post);
     });
   })
@@ -136,7 +187,9 @@ router.route('/post/:postId')
         Text:  req.body.Text
       }
     }, function(err, post){
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       res.status(200).send(post);
     });
   })
@@ -144,22 +197,46 @@ router.route('/post/:postId')
     Post.remove({
       _id : mongoose.Types.ObjectId(req.params.postId)
     }, function(err){
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       res.sendStatus(200);
     });
   });
 
 router.route('/posts')
   .post(function(req, res){
+    var ids = [];
+    Friend.findOne({
+      UserId: req.body.userId
+    }, function(err, user){
+      if (err) {
+        throw err;
+      }
+      if (user && user.Friends.length) {
+        ids = user.Friends;
+      }
+      ids.push(req.body.userId);
       Post.find({
-        UserId: req.body.userId
-      }, function(err, posts) {
-        if (err) throw err;
-        res.send(posts);
+        UserId: {
+          $in : ids
+        }
+      }, function(err, posts){
+        if (err) {
+          throw err;
+        }
+        posts.sort(function(a, b){
+          if (a.DateCreation === b.DateCreation) {
+            return 0;
+          }
+          return (a.DateCreation > b.DateCreation) ? -1 : 1;
+        });
+        res.status(200).send(posts);
       });
+    });
   });
 
 
 module.exports = function(app) {
   app.use('/api', router);
-}
+};
