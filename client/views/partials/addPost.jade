@@ -4,4 +4,4 @@ form(ng-submit='addpost.addPost()', name='addPostForm')
     input.form__input(placeholder='Title', name='Title', ng-model='addpost.title', required)
   .form__row
     textarea.form__textarea(placeholder='Text', name='Text', ng-model='addpost.text', required)
-  button.btn(type='submit', ng-disabled='addPostForm.$invalid') Add
+  button.btn.hvr-ripple-out(type='submit', ng-disabled='addPostForm.$invalid') Add

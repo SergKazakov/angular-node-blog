@@ -30,8 +30,7 @@ gulp.task('scripts', function () {
     .pipe(livereload());
 });
 
-gulp.task('default', ['sass', 'scripts'], function(){
+gulp.task('default', ['sass'], function(){
   livereload.listen();
   gulp.watch('client/scss/**/*.scss', ['sass']);
-  gulp.watch('./**/*.js', ['scripts']);
 });

@@ -376,6 +376,45 @@
   }
 }
 
+@keyframes hvr-ripple-out {
+  100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
+    opacity: 0;
+  }
+}
+
+.hvr-ripple-out {
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  position: relative;
+  &:before{
+    content: '';
+    position: absolute;
+    border: $link-color solid 6px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    animation-duration: 1s;
+  }
+  &_danger {
+    &:before {
+      border: lighten(#f00, 15%) solid 6px;
+    }
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    &:before {
+      animation-name: hvr-ripple-out;
+    }
+  }
+}
+
 .btn{
     display: inline-block;
     background:  $link-color;
@@ -389,18 +428,12 @@
     transition: all $td;
     cursor: pointer;
     border: 0;
-    &:hover{
-        background: darken($link-color ,10%);
-    }
     &_block{
       display: block;
       width: 100%;
     }
     &_danger{
       background: lighten(#f00, 15%);
-      &:hover{
-        background: darken(#f00, 15%);
-      }
     }
 }
 
@@ -623,6 +656,16 @@
   &__actions{
     width: 60%;
     text-align: center;
+  }
+}
+
+.block-ui-container{
+  background: rgba(255, 255, 255, 0.9);
+  &__img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 

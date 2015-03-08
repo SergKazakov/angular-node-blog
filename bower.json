@@ -2,11 +2,11 @@
   "name": "billboard",
   "version": "0.0.1",
   "dependencies": {
-    "angular":              "latest",
-    "angular-loading-bar":  "latest",
-    "userapp-angular":      "latest",
-    "angular-mocks":        "latest",
-    "angular-ui-router":    "latest"
+    "angular": "latest",
+    "userapp-angular": "latest",
+    "angular-mocks": "latest",
+    "angular-ui-router": "latest",
+    "angular-block-ui": "~0.2.0"
   },
   "devDependencies": {}
 }
