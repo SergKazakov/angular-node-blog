@@ -30,6 +30,6 @@
     "npm": "latest"
   },
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "bower cache clean && bower install"
   }
 }
