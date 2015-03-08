@@ -1,20 +1,21 @@
 section.posts(data-ng-if='!home.arePostsEmpty')
   input.form__input.form__input_search(type='text', placeholder='Search in {{home.posts.length}} posts...', ng-model='search')
-  .post(data-ng-repeat='post in home.posts | filter : search')
-    .post-date
-      span.post-date__inner {{post.DateCreation | date : 'd MMM'}}
-    ul.post-info
-      li.post-info__item
-        | posted by&nbsp;
-        a.post-info__item-link(ui-sref='user({userId: post.UserId})') {{post.UserName}}
-    .post-container
-      h2.post-header {{post.Title}}
-      p.post-body {{post.Text | limitTo:200}}
-      ul.post-actions
-        li.post-actions__item
-          a.post-actions__link(ui-sref='post({postId: post._id})') Read More
-        li.post-actions__item(data-ng-if='post.UserId == user.user_id')
-          a.post-actions__link(ui-sref='editpost({postId: post._id})') Edit
-        li.post-actions__item(data-ng-if='post.UserId == user.user_id')
-          a.post-actions__link(data-ng-click='home.deletePost(post._id, $index)', href='javascript:void(0)') Delete
+  div(infinite-scroll='home.loadMorePosts()', infinite-scroll-disabled='home.disabledInfiniteScroll')
+    .post(data-ng-repeat='post in home.posts | filter : search')
+      .post-date
+        span.post-date__inner {{post.DateCreation | date : 'd MMM'}}
+      ul.post-info
+        li.post-info__item
+          | posted by&nbsp;
+          a.post-info__item-link(ui-sref='user({userId: post.UserId})') {{post.UserName}}
+      .post-container
+        h2.post-header {{post.Title}}
+        p.post-body {{post.Text | limitTo:200}}
+        ul.post-actions
+          li.post-actions__item
+            a.post-actions__link(ui-sref='post({postId: post._id})') Read More
+          li.post-actions__item(data-ng-if='post.UserId == user.user_id')
+            a.post-actions__link(ui-sref='editpost({postId: post._id})') Edit
+          li.post-actions__item(data-ng-if='post.UserId == user.user_id')
+            a.post-actions__link(data-ng-click='home.deletePost(post._id, $index)', href='javascript:void(0)') Delete
 h1.post-empty(data-ng-if='home.arePostsEmpty') Oops! You have no posts:(

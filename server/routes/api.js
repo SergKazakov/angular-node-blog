@@ -217,22 +217,42 @@ router.route('/posts')
         ids = user.Friends;
       }
       ids.push(req.body.userId);
-      Post.find({
-        UserId: {
-          $in : ids
-        }
-      }, function(err, posts){
-        if (err) {
-          throw err;
-        }
-        posts.sort(function(a, b){
-          if (a.DateCreation === b.DateCreation) {
-            return 0;
+      Post
+        .find({
+          UserId: {
+            $in : ids
           }
-          return (a.DateCreation > b.DateCreation) ? -1 : 1;
+        })
+        .sort({
+          DateCreation: -1
+        })
+        .skip(req.body.pageSize * (req.body.pageNumber - 1))
+        .limit(req.body.pageSize)
+        .exec(function(err, posts){
+          if (err) {
+            throw err;
+          }
+          if (req.body.pageNumber === 1) {
+            Post.count({
+              UserId: {
+                $in : ids
+              }
+            }, function(err, postsCount){
+              if (err) {
+                throw err;
+              }
+              res.status(200).send({
+                posts:      posts,
+                postsCount: postsCount
+              });
+            });
+          }
+          else {
+            res.status(200).send({
+              posts: posts
+            });
+          }
         });
-        res.status(200).send(posts);
-      });
     });
   });
 

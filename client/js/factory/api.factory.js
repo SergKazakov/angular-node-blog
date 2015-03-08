@@ -24,9 +24,11 @@ angular.module('billboard')
       deletePost: function (postId) {
         return $http.delete('/api/post/' + postId);
       },
-      getPosts: function (userId) {
+      getPosts: function (obj) {
         return $http.post('/api/posts', {
-          userId: userId
+          userId:     obj.userId,
+          pageSize:   obj.pageSize,
+          pageNumber: obj.pageNumber
         });
       },
       getAllUsers: function (userId) {

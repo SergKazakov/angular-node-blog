@@ -3,7 +3,8 @@
 angular.module('billboard', [
   'ui.router',
   'UserApp',
-  'blockUI'
+  'blockUI',
+  'infinite-scroll'
 ])
 
 .config(function ($urlRouterProvider, $locationProvider, blockUIConfig) {

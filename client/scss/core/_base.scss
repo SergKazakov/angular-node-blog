@@ -28,6 +28,9 @@ input,
 textarea {
     border: 0;
     font-family: $base-font-family;
+    @include placeholder {
+      color: #c0c0c0;
+    }
 }
 
 a,
