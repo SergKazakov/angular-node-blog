@@ -5,7 +5,7 @@ angular.module('billboard')
 
   	this.posts                  = [];
     this.pageNumber             = 1;
-    this.totalPages             = 1;
+    this.totalPosts             = 1;
     this.pageSize               = 5;
     this.loadPostsExecuted      = false;
     this.arePostsEmpty          = false;
@@ -15,39 +15,35 @@ angular.module('billboard')
       if (this.loadPostsExecuted) {
         return;
       }
-      if (this.pageNumber <= this.totalPages) {
-        this.loadPostsExecuted = true;
-        api.getPosts({
-          userId:     user.current.user_id,
-          pageSize:   this.pageSize,
-          pageNumber: this.pageNumber
-        }).success(function(response){
-          if (response.posts && response.posts.length) {
-            if (response.postsCount) {
-              this.totalPages = Math.ceil(response.postsCount / this.pageSize);
-            }
-            if (!this.posts.length) {
-              this.posts = response.posts;
-            }
-            else {
-              response.posts.forEach(function(el){
-                this.posts.push(el);
-              }.bind(this));
-            }
-            ++this.pageNumber;
-            this.arePostsEmpty = false;
+      this.loadPostsExecuted = true;
+      api.getPosts({
+        userId:     user.current.user_id,
+        pageSize:   this.pageSize,
+        pageNumber: this.pageNumber
+      }).success(function(response){
+        if (response.posts && response.posts.length) {
+          if (response.postsCount) {
+            this.totalPosts = response.postsCount;
           }
-          else if (!this.posts.length){
-            this.arePostsEmpty = true;
+          if (!this.posts.length) {
+            this.posts = response.posts;
           }
-        }.bind(this))
-        .finally(function(){
-          this.loadPostsExecuted = false;
-        }.bind(this));
-      }
-      else {
-        this.disabledInfiniteScroll = true;
-      }
+          else {
+            response.posts.forEach(function(el){
+              this.posts.push(el);
+            }.bind(this));
+          }
+          ++this.pageNumber;
+          this.arePostsEmpty = false;
+        }
+        else if (!this.posts.length){
+          this.arePostsEmpty = true;
+        }
+      }.bind(this))
+      .finally(function(){
+        this.loadPostsExecuted = false;
+        this.disabledInfiniteScroll = this.posts.length === this.totalPosts;
+      }.bind(this));
     };
 
   	this.deletePost = function(postId, index){

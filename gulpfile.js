@@ -7,7 +7,8 @@ var gulp          = require('gulp'),
     sourcemaps    = require('gulp-sourcemaps'),
     plumber       = require('gulp-plumber'),
     jshint        = require('gulp-jshint'),
-    stylish       = require('jshint-stylish');
+    stylish       = require('jshint-stylish'),
+    wiredep       = require('wiredep').stream;
 
 gulp.task('sass', function () {
   gulp.src('client/scss/main.scss')
@@ -28,6 +29,12 @@ gulp.task('scripts', function () {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(livereload());
+});
+
+gulp.task('wiredep', function () {
+  return gulp.src('client/views/layout.jade')
+    .pipe(wiredep())
+    .pipe(gulp.dest('client/views'));
 });
 
 gulp.task('default', ['sass'], function(){

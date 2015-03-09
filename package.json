@@ -23,7 +23,8 @@
     "gulp-sass": "latest",
     "gulp-sourcemaps": "latest",
     "install": "^0.1.8",
-    "jshint-stylish": "^1.0.1"
+    "jshint-stylish": "^1.0.1",
+    "wiredep": "^2.2.2"
   },
   "engines": {
     "node": "latest",
