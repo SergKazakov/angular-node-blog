@@ -3,13 +3,13 @@
 angular.module('billboard')
   .controller('HomeCtrl', function(user, api) {
 
-  	this.posts                  = [];
-    this.pageNumber             = 1;
-    this.totalPosts             = 1;
-    this.pageSize               = 5;
-    this.loadPostsExecuted      = false;
-    this.arePostsEmpty          = false;
-    this.disabledInfiniteScroll = false;
+  	this.posts                     = [];
+    this.totalPosts                = 1;
+    this.pageNumber                = 1;
+    this.pageSize = this.skipPages = 5;
+    this.loadPostsExecuted         = false;
+    this.arePostsEmpty             = false;
+    this.disabledInfiniteScroll    = false;
 
     this.loadMorePosts = function(){
       if (this.loadPostsExecuted) {
@@ -18,6 +18,7 @@ angular.module('billboard')
       this.loadPostsExecuted = true;
       api.getPosts({
         userId:     user.current.user_id,
+        skipPages:  this.skipPages,
         pageSize:   this.pageSize,
         pageNumber: this.pageNumber
       }).success(function(response){
@@ -32,6 +33,9 @@ angular.module('billboard')
             response.posts.forEach(function(el){
               this.posts.push(el);
             }.bind(this));
+          }
+          if (this.skipPages === 0) {
+            this.skipPages = this.pageSize;
           }
           ++this.pageNumber;
           this.arePostsEmpty = false;
@@ -49,6 +53,8 @@ angular.module('billboard')
   	this.deletePost = function(postId, index){
   		api.deletePost(postId).success(function(){
         this.posts.splice(index, 1);
+        --this.totalPosts;
+        --this.skipPages;
         if (!this.posts.length) {
           this.arePostsEmpty = true;
         }

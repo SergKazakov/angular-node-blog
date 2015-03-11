@@ -226,7 +226,7 @@ router.route('/posts')
         .sort({
           DateCreation: -1
         })
-        .skip(req.body.pageSize * (req.body.pageNumber - 1))
+        .skip(req.body.skipPages * (req.body.pageNumber - 1))
         .limit(req.body.pageSize)
         .exec(function(err, posts){
           if (err) {

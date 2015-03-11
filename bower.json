@@ -6,7 +6,6 @@
     "userapp-angular":    "latest",
     "angular-mocks":      "latest",
     "angular-ui-router":  "latest",
-    "angular-block-ui":   "latest",
     "ngInfiniteScroll":   "latest"
   },
   "devDependencies": {},

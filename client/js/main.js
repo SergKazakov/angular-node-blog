@@ -3,15 +3,12 @@
 angular.module('billboard', [
   'ui.router',
   'UserApp',
-  'blockUI',
   'infinite-scroll'
 ])
 
-.config(function ($urlRouterProvider, $locationProvider, blockUIConfig) {
+.config(function ($urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
-  blockUIConfig.delay = 0;
-  blockUIConfig.templateUrl = '../views/block-ui/block-ui.html';
 })
 
 .run(function (user) {

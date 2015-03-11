@@ -27,6 +27,7 @@ angular.module('billboard')
       getPosts: function (obj) {
         return $http.post('/api/posts', {
           userId:     obj.userId,
+          skipPages:  obj.skipPages,
           pageSize:   obj.pageSize,
           pageNumber: obj.pageNumber
         });
