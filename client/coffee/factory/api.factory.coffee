@@ -23,7 +23,6 @@ angular
         userId:     obj.userId
         skipPages:  obj.skipPages
         pageSize:   obj.pageSize
-        pageNumber: obj.pageNumber
     getAllUsers: (userId) ->
       $http.post '/api/users', userId: userId
     addFriend: (obj) ->

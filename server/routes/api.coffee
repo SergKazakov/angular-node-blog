@@ -154,11 +154,11 @@ router
       Post
         .find UserId: $in: ids
         .sort DateCreation: -1
-        .skip req.body.skipPages * (req.body.pageNumber - 1)
+        .skip req.body.skipPages
         .limit req.body.pageSize
         .exec (err, posts) ->
           throw err if err
-          if req.body.pageNumber is 1
+          if not req.body.skipPages
             Post.count
               UserId: $in: ids
             ,
