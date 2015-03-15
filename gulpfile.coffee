@@ -6,37 +6,42 @@ autoprefixer    = require 'gulp-autoprefixer'
 livereload      = require 'gulp-livereload'
 sourcemaps      = require 'gulp-sourcemaps'
 plumber         = require 'gulp-plumber'
-jshint          = require 'gulp-jshint'
-stylish         = require 'jshint-stylish'
+coffee          = require 'gulp-coffee'
+concat          = require 'gulp-concat'
 wiredep         = require('wiredep').stream
 
 gulp.task 'sass', ->
   gulp.src 'client/scss/main.scss'
-  .pipe plumber()
-  .pipe sourcemaps.init()
-  .pipe sass()
-  .pipe autoprefixer
-    browsers: [ 'last 2 versions' ]
-    cascade: on
-  .pipe sourcemaps.write()
-  .pipe gulp.dest 'client/css'
-  .pipe livereload()
+    .pipe plumber()
+    .pipe sourcemaps.init()
+    .pipe sass()
+    .pipe autoprefixer
+      browsers: [ 'last 2 versions' ]
+      cascade: on
+    .pipe sourcemaps.write()
+    .pipe gulp.dest 'client/css'
+    .pipe livereload()
 
-gulp.task 'scripts', ->
-  gulp.src [
-    './**/*.js'
-    '!./node_modules/**'
-    '!./client/bower_components/**'
-  ]
-  .pipe jshint()
-  .pipe jshint.reporter(stylish)
-  .pipe livereload()
+gulp.task 'coffee', ->
+  gulp.src([
+    'client/coffee/main.coffee'
+    'client/coffee/factory/**/*.coffee'
+    'client/coffee/controller/**/*.coffee'
+    ])
+    .pipe plumber()
+    .pipe sourcemaps.init()
+    .pipe coffee bare: on
+    .pipe sourcemaps.write()
+    .pipe concat 'app.js'
+    .pipe gulp.dest 'client/js'
+    .pipe livereload()
 
 gulp.task 'wiredep', ->
   gulp.src 'client/views/layout.jade'
-  .pipe wiredep()
-  .pipe gulp.dest 'client/views'
+    .pipe wiredep()
+    .pipe gulp.dest 'client/views'
 
 gulp.task 'default', [ 'sass' ], ->
   livereload.listen()
   gulp.watch 'client/scss/**/*.scss', [ 'sass' ]
+  gulp.watch ['client/coffee/main.coffee', 'client/coffee/**/*.coffee'], [ 'coffee' ]

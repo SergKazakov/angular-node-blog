@@ -18,13 +18,13 @@
   "devDependencies": {
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
-    "gulp-jshint": "latest",
+    "gulp-coffee": "^2.3.1",
+    "gulp-concat": "^2.5.2",
     "gulp-livereload": "latest",
     "gulp-plumber": "latest",
     "gulp-sass": "latest",
     "gulp-sourcemaps": "latest",
     "install": "^0.1.8",
-    "jshint-stylish": "^1.0.1",
     "wiredep": "^2.2.2"
   },
   "engines": {
