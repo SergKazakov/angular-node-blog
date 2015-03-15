@@ -6,6 +6,7 @@
     "body-parser": "latest",
     "bower": "latest",
     "chalk": "^1.0.0",
+    "coffee-script": "^1.9.1",
     "error-handler": "latest",
     "express": "latest",
     "jade": "latest",
