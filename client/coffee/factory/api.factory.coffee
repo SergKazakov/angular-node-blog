@@ -1,8 +1,5 @@
-'use strict'
-
-angular
-  .module 'billboard'
-  .factory 'api', ($http) ->
+do ->
+  api = ($http) ->
     addPost: (obj) ->
       $http.post '/api/post',
         Title:        obj.title
@@ -31,3 +28,7 @@ angular
       $http.put '/api/friend/' + obj.friendId, userId: obj.userId
     getUser: (userId) ->
       $http.get '/api/user/' + userId
+
+  angular
+    .module 'billboard'
+    .factory 'api', api

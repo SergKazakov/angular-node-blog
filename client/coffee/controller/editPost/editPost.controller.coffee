@@ -1,8 +1,5 @@
-'use strict'
-
-angular
-  .module 'billboard'
-  .controller 'EditPostCtrl', ($stateParams, $state, api) ->
+do ->
+  EditPostCtrl = ($stateParams, $state, api) ->
     @post = {}
     api
       .getPost $stateParams.postId
@@ -13,3 +10,7 @@ angular
         .editPost @post
         .success (data) -> $state.go 'home'
     return
+
+  angular
+    .module 'billboard'
+    .controller 'EditPostCtrl', EditPostCtrl

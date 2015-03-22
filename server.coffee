@@ -10,13 +10,13 @@ chalk             = require 'chalk'
 app               = module.exports = express()
 
 app
-.set 'views', path.join __dirname, '/client/views'
-.set 'view engine', 'jade'
-.use morgan 'dev'
-.use bodyParser.json()
-.use bodyParser.urlencoded extended: false
-.use methodOverride()
-.use express.static path.join __dirname, 'client'
+  .set 'views', path.join __dirname, '/client/views'
+  .set 'view engine', 'jade'
+  .use morgan 'dev'
+  .use bodyParser.json()
+  .use bodyParser.urlencoded extended: false
+  .use methodOverride()
+  .use express.static path.join __dirname, 'client'
 
 mongoose.connect 'mongodb://root:root@ds033601.mongolab.com:33601/blog', (err) ->
   if err

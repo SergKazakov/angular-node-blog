@@ -1,7 +1,5 @@
-'use strict'
-angular
-  .module 'billboard'
-  .controller 'FriendsCtrl', ($state, user, api) ->
+do ->
+  FriendsCtrl = ($state, user, api) ->
     @users            = []
     @areFriendsEmpty  = no
     api
@@ -29,3 +27,7 @@ angular
       .success =>
         @users[index].properties.isFriend.value = no
     return
+
+  angular
+    .module 'billboard'
+    .controller 'FriendsCtrl', FriendsCtrl

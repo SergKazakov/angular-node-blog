@@ -29,9 +29,7 @@ gulp.task 'coffee', ->
     'client/coffee/controller/**/*.coffee'
     ])
     .pipe plumber()
-    .pipe sourcemaps.init()
     .pipe coffee bare: on
-    .pipe sourcemaps.write()
     .pipe concat 'app.js'
     .pipe gulp.dest 'client/js'
     .pipe livereload()
@@ -41,7 +39,7 @@ gulp.task 'wiredep', ->
     .pipe wiredep()
     .pipe gulp.dest 'client/views'
 
-gulp.task 'default', [ 'sass' ], ->
+gulp.task 'default', [ 'sass', 'coffee' ], ->
   livereload.listen()
   gulp.watch 'client/scss/**/*.scss', [ 'sass' ]
   gulp.watch ['client/coffee/main.coffee', 'client/coffee/**/*.coffee'], [ 'coffee' ]

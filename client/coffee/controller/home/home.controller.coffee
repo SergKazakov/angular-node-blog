@@ -1,8 +1,5 @@
-'use strict'
-
-angular
-  .module 'billboard'
-  .controller 'HomeCtrl', (user, api) ->
+do ->
+  HomeCtrl = (user, api) ->
     @posts                  = []
     @totalPosts             = 0
     @pageSize               = 5
@@ -40,3 +37,7 @@ angular
           --@totalPosts
           @arePostsEmpty = on if not @totalPosts
     return
+
+  angular
+    .module 'billboard'
+    .controller 'HomeCtrl', HomeCtrl

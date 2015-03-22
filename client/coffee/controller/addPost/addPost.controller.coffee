@@ -1,8 +1,5 @@
-'use strict'
-
-angular
-  .module 'billboard'
-  .controller 'AddPostCtrl', ($state, user, api) ->
+do ->
+  AddPostCtrl = ($state, user, api) ->
     @addPost = ->
       api
         .addPost
@@ -13,3 +10,7 @@ angular
         .success =>
           $state.go 'home'
     return
+
+  angular
+    .module 'billboard'
+    .controller 'AddPostCtrl', AddPostCtrl
